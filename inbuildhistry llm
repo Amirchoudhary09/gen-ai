@@ -1,0 +1,30 @@
+import { GoogleGenAI } from "@google/genai";
+import readlineSync from "readline-sync";
+
+const ai = new GoogleGenAI({
+  apiKey: "AIzaSyDwEP0mXdnxooqeWCVV2JJCi12MeB8vRgo"
+});
+
+const chat = ai.chats.create({
+  model: "gemini-2.5-flash",
+  history: [],
+});
+
+async function main() {
+  try {
+    console.log("Starting...");
+    const userproblem = readlineSync.question("ask me anythink-> ");
+
+    const responce = await chat.sendMessage({
+      message: userproblem,
+    });
+
+    console.log(responce.text);
+    main(); // tumhara original logic
+
+  } catch (error) {
+    console.error("Error during chat:", error);
+  }
+}
+
+main();
